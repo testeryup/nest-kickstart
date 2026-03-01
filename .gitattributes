@@ -1,0 +1,18 @@
+# Use CRLF for .sql and .schema files
+
+*.sql text eol=crlf
+
+*.schema text eol=crlf
+
+
+
+# Use LF for .ts files
+
+*.ts text eol=lf
+
+
+
+# Use LF for all other files
+
+* text=auto eol=lf
+
