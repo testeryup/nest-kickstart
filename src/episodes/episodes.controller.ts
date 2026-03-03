@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { EpisodeService } from './episodes.service';
 
 @Controller('episodes')
@@ -7,8 +7,8 @@ export class EpisodesController {
         private readonly episodeService: EpisodeService
     ) {}
     @Get('featured')
-    findFeatured() {
-        return 'featured episodes';
+    async findFeatured() {
+        return await this.episodeService.getAll();
     }
 
     @Get(':id')
@@ -17,8 +17,17 @@ export class EpisodesController {
     }
 
     @Post()
-    create(@Body() input: any) {
-        console.log(`check var input: ${input}`);
-        return `input of post is: ${input}`;
+    async create(@Body() input: any) {
+        return await this.episodeService.create(input.name, input.content);
+    }
+
+    @Put(':id')
+    async update(@Param('id') id: number, @Body() input: any) {
+        return await this.episodeService.update(id, input.name, input.content);
+    }
+
+    @Put(':id/delete')
+    async delete(@Param('id') id: number) {
+        return await this.episodeService.delete(id);
     }
 }
