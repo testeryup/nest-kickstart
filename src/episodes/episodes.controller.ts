@@ -1,16 +1,19 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { EpisodeService } from './episodes.service';
 
 @Controller('episodes')
 export class EpisodesController {
+    constructor(
+        private readonly episodeService: EpisodeService
+    ) {}
     @Get('featured')
     findFeatured() {
         return 'featured episodes';
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string) {
-        console.log(id);
-        return `id is: ${id}`;
+    async findOne(@Param('id') id: number) {
+        return await this.episodeService.getOne(id);
     }
 
     @Post()
